@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<!-- Adapted from https://www.w3schools.com/w3css/tryw3css_templates_photo3.htm by EM 8/28/17 -->
+<!-- Edited for Fall semester DY 9/15/19 -->
+<html lang="en">
+   <head>
+      <title>Assignment 3a</title>
+      <meta charset="UTF-8">
+      <!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"> -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="images/avatar.png" rel="shortcut icon" type="image/png">
+      <link href="css/w3.css" rel="stylesheet" type="text/css">
+      <script src="js/javascript.js"></script>
+      <link href="css/stylesheet.css" rel="stylesheet" type="text/css">
+      <link href="https://fonts.googleapis.com/css?family=Alata&display=swap" rel="stylesheet">
+      <script src="A3dice.js"></script>
+      <style>
+		a:focus, a:hover {
+		   color: yellow;
+		   background-color: black;
+		   text-decoration: none;
+		 }
+        .imgwhitebox { /* This class is used for enclosing each of our dice */
+             float: left;
+             text-align: center;
+             width: 120px;
+             border: 1px solid white;
+             margin: 4px;
+             padding: 4px;
+          }
+      </style>
+      <script>
+      </script>
+   </head>
+
+   <body onload="setup()">
+
+<!-- Header -->
+      <header class="w3-display-container w3-content w3-center" style="max-width:1500px">
+         <img class="w3-image" src="images/avatar.png" alt="header image" width="1200" height="401">
+         <div class="w3-display-middle w3-padding-large w3-border w3-wide w3-center" style="color:yellow">
+            <h1 class="w3-hide-medium w3-hide-small w3-xxxlarge" style="font-family: 'Handlee', cursive;">Konnie Detoudom</h1>
+            <h2 class="w3-hide-large" style="white-space:nowrap; font-family: 'Handlee', cursive;">Konnie Detoudom</h2>
+            <h3 class="w3-hide-medium">CS 213</h3>
+         </div>
+<!-- Navbar (placed at the bottom of the header image) -->
+         <nav class="w3-bar w3-round w3-display-bottommiddle w3-hide-small" style="bottom:-16px; background-color:yellow">
+            <div role="menu">
+               <a role="menuitem" href="#" class="w3-bar-item w3-button">Home</a>
+               <a role="menuitem" href="A1.html" class="w3-bar-item w3-button">A1</a>
+               <a role="menuitem" href="A2.html" class="w3-bar-item w3-button">A2</a>
+            </div>
+         </nav>
+      </header>
+
+<!-- Navbar on small screens -->
+      <nav class="w3-center w3-padding-16 w3-hide-large w3-hide-medium" >
+         <div role="menu" class="w3-bar" style="background-color:yellow">
+            <a role="menuitem" href="#" class="w3-bar-item w3-button focusit">Home</a>
+            <a role="menuitem" href="#" class="w3-bar-item w3-button">A1</a>
+         </div>
+      </nav>
+
+<!-- Main page content -->
+      <main class="w3-content w3-padding-large w3-margin-top w3-display-container">
+         <div class="w3-padding-large w3-padding-32 w3-margin-top" style="background-color:gold">
+         <h3 class="w3-center" id="mainh3">JavaScript Dice!</h3>
+            <script>
+               document.getElementById("mainh3").style.textAlign="center";
+               document.getElementById("mainh3").style.fontFamily="Alata, san-serif";
+               document.getElementById("mainh3").style.backgroundColor="#C6A2CE";
+               document.getElementById("mainh3").style.border="2px solid white";
+               document.getElementById("mainh3").style.borderRadius="5px";
+            </script>
+            <h2>Mouse Events</h2>
+            <div class="w3-container" id="TumblingDice">
+               <div class="imgwhitebox" id="ComputerImgbox1">
+                  <img ondblclick="flipDice()" id="changeDice" src="" alt="no dots" style="width: 100%">
+               </div>
+               <div class="imgwhitebox" id="ComputerImgbox2">
+                  <img ondblclick="changeDiceTwo()" onmouseover="displayDate()" onmouseout="displayDiceValue()" id="changeDiceTwo" src="" alt="no dots" style="width: 100%">
+                  <aside id="aside"></aside>
+               </div>
+               <div class="imgwhitebox" id="ComputerImgbox3">
+                  <img src="" alt="no dots" style="width: 100%" id="diceThree" onclick="diceThreeValue()">
+               </div>
+            </div>
+         <hr>
+         <p>This website is for my CS213 class.</p>
+         <cite style="font-size:xx-small">Header image from: <a href="http://www.bentley.edu/offices/marketing-communications/bentley-brand">Bentley Brand Page</a></cite>
+         </div>
+      </main>
+<!-- End Main page content -->
+
+<!-- Footer -->
+      <footer class="w3-display-container w3-content w3-center" style="max-width:1500px">
+         <div class="w3-container" style="background-color:yellow">
+            <p tabindex="0" id="foot" onmouseover="myAvatar()" onmouseout="myCopyright()" onfocus="myAvatar()" onblur="myCopyright()">Copyright &copy; 2019</p>
+         </div>
+      </footer>
+<!-- End Footer -->
+   </body>
+</html>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="36bcd359-3d9a-4435-a65a-a140932e89ad" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1RQeZvvXzlWv5iek3qiZOsmOsQE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/A3bPlayerHtml/A3bPlayer.html" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Khonesavanh Detoudom\WebstormProjects\CS213" />
+      <recent name="C:\Users\Khonesavanh Detoudom\WebstormProjects\CS213\Class 07" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="A3-dice2.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/CS213/A3-dice2.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.A3-dice2.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="36bcd359-3d9a-4435-a65a-a140932e89ad" name="Default Changelist" comment="" />
+      <created>1569603805646</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1569603805646</updated>
+      <workItem from="1569603806992" duration="1040000" />
+      <workItem from="1569951484083" duration="29000" />
+      <workItem from="1569951569028" duration="145000" />
+      <workItem from="1570207769465" duration="2441000" />
+      <workItem from="1570210683541" duration="53000" />
+      <workItem from="1570389078393" duration="409000" />
+      <workItem from="1570389512350" duration="999000" />
+      <workItem from="1570552667412" duration="2168000" />
+      <workItem from="1570661036587" duration="648000" />
+      <workItem from="1570844913042" duration="320000" />
+      <workItem from="1571072613396" duration="453000" />
+      <workItem from="1571177668763" duration="7178000" />
+      <workItem from="1571258596966" duration="13131000" />
+      <workItem from="1571417413248" duration="21000" />
+      <workItem from="1571417454812" duration="411000" />
+      <workItem from="1571418851803" duration="39000" />
+      <workItem from="1571515860119" duration="229000" />
+      <workItem from="1571978082237" duration="1298000" />
+      <workItem from="1572021451228" duration="2394000" />
+      <workItem from="1572287258439" duration="11000" />
+      <workItem from="1572367255861" duration="29000" />
+      <workItem from="1572367303962" duration="1529000" />
+      <workItem from="1572928784180" duration="78000" />
+      <workItem from="1572928920579" duration="2576000" />
+      <workItem from="1572969504419" duration="5206000" />
+      <workItem from="1573322925108" duration="789000" />
+      <workItem from="1573323999522" duration="8000" />
+      <workItem from="1573839941213" duration="792000" />
+      <workItem from="1573932980936" duration="718000" />
+      <workItem from="1574129940470" duration="1901000" />
+      <workItem from="1574184919091" duration="3635000" />
+      <workItem from="1574188966976" duration="1309000" />
+      <workItem from="1574366603660" duration="6138000" />
+      <workItem from="1574443579186" duration="4275000" />
+      <workItem from="1574726838103" duration="47000" />
+      <workItem from="1574727012870" duration="28000" />
+      <workItem from="1574727061117" duration="10251000" />
+      <workItem from="1574789642109" duration="3064000" />
+      <workItem from="1575655848489" duration="46000" />
+      <workItem from="1576137954170" duration="106000" />
+      <workItem from="1576257209889" duration="325000" />
+      <workItem from="1576261863961" duration="31000" />
+      <workItem from="1576263140196" duration="513000" />
+      <workItem from="1576263829498" duration="5746000" />
+      <workItem from="1576272065547" duration="1830000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="466" y="0" key="#Inspections" timestamp="1574744647830">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="466" y="0" key="#Inspections/0.0.1280.680@0.0.1280.680" timestamp="1574744647830" />
+    <state x="321" y="70" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1576257236204">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="321" y="70" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1280.680@0.0.1280.680" timestamp="1576257236204" />
+    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1576272202205">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1576272202205" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1574793686174">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1574793686174" />
+  </component>
+</project>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f1322a51-b807-4af6-ba03-26d4f47ec86f" name="detoudo_khon" url="http://cs213-003-f19-dy006.eastus2.cloudapp.azure.com">
+        <fileTransfer host="cs213-003-f19-dy006.eastus2.cloudapp.azure.com" port="22" rootFolder="/data" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

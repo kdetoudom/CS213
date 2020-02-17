@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="images/avatar.png" rel="shortcut icon" type="image/png">
+    <title>Temperature Conversion</title>
+</head>
+<body>
+
+<p id="demo1"></p>
+<p id="demo2"></p>
+
+<script>
+    function toCelsius(f) {
+        // Subtract 32, multiply by 5, then divide by 5.
+        console.log("toCelsius: Converting " + f + " to deg C");
+        return (5/9) * (f - 32);
+    }
+    function toF(c) {
+        // Multiply by 9, then divide by 5, then add 32.
+        console.log("toF: Converting " + c + " to deg F");
+        return (c * 9)/5 + 32;
+    }
+    let degF = 77;
+    document.getElementById("demo1").innerHTML = degF + " deg F = " + toCelsius(degF) + " deg C.";
+    let degC = 33;
+    document.getElementById("demo2").innerHTML = degC + " deg C = " + toF(degC) + " deg F.";
+</script>
+
+</body>
+</html>

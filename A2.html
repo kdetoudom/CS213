@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- KD October 8th, 2019 -->
+    <title>Assignment 2: My Bentley Experience</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet">
+
+<!-- CSS Changes
+ - Changed the webpages font to all Montserrat
+ - Changed the table color to be pink
+ - Changed the table font to be Dosis
+ - Changed the color of the banner of the table to be pink
+ - Changed the font color of "senior survey" to white with a text shadow
+-->
+
+<style>
+    body,h1,h2,h3,h4,h5,h6 {
+        font-family: "Montserrat", cursive;
+        color: black;
+    }
+
+    body, html {
+        height: 100%;
+        color: #777;
+        line-height: 1.8;
+    }
+
+    table {
+        background-color: lightpink;
+        font-family: "Dosis", cursive;
+    }
+
+    table, td {
+        border: 0.1em solid;
+        padding-left: 0.4em;
+        border-collapse: collapse;
+        font-size: x-large;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .w3-top {
+        background-color: pink;
+        font-family: "Montserrat", sans-serif;
+    }
+
+    /* Create a Parallax Effect */
+    .bgimg-1, .bgimg-2, .bgimg-3 {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    /* First image (Logo. Full height) */
+    .bgimg-1 {
+        background-image: url("images/streetviewtrash.jpg");
+        min-height: 100%;
+    }
+
+    /* Second image (Portfolio) */
+    .bgimg-2 {
+        background-image: url("images/streetquincy.jpg");
+        min-height: 400px;
+    }
+
+    /* Third image (Contact) */
+    .bgimg-3 {
+        background-image: url("images/hellobostonpose.jpg");
+        min-height: 400px;
+    }
+
+    .w3-wide {letter-spacing: 10px;}
+    .w3-hover-opacity {cursor: pointer;}
+
+
+</style>
+<body onload="setup()">
+<br><br>
+<h2 style="text-shadow: 1px 1px white; background-color: pink; background-image: linear-gradient(to top right, pink, lightskyblue);
+border-top-right-radius: 25px; border-bottom-left-radius: 25px;">My Bentley Experience</h2>
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+    <div class="w3-row w3-large" id="myNavbar">
+        <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+            <i class="fa fa-bars"></i>
+        </a>
+        <a href="default.html" class="w3-bar-item w3-button">HOME</a>
+        <a href="A1.html" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i>A1</a>
+        <a href="A2.html" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i>A2</a>
+
+    </div>
+
+    <!-- Navbar on small screens -->
+    <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
+        <a href="default.html" class="w3-bar-item w3-button" onclick="toggleFunction()">HOME</a>
+        <a href="A1.html" class="w3-bar-item w3-button" onclick="toggleFunction()">A1</a>
+        <a href="A2.html" class="w3-bar-item w3-button" onclick="toggleFunction()">A2</a>
+    </div>
+</div>
+
+<!-- First Parallax Image with Logo Text -->
+<div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
+    <div class="w3-display-middle" style="white-space:nowrap;">
+        <span class="w3-center w3-black w3-xlarge w3-wide w3-animate-opacity">MY <span class="w3-hide-small">BENTLEY</span> EXPERIENCE</span>
+    </div>
+</div>
+
+<!-- Container (About Section) -->
+<div class="w3-content w3-container" id="about">
+    <h3 class="w3-center">My Bentley Experience</h3>
+    <p class="w3-center"><em>What my experience at Bentley has been after attending this university for a year and a half.</em></p>
+    <p>One of my favorite experiences from while I was here at Bentley was when I went to Quincy Market over the Labor Day weekend
+    with my friend, Joana. During this experience, we went to Shake Shack in Harvard Square for lunch before deciding to go
+    shopping at Quincy Market. This experience is special to me because Joana has become one of my closest friends at Bentley
+    and we had never hung out in Boston together because the last time we planned to, both of us fell sick. Through this expereience
+    I was grateful to find an great friend who is supporting of me and shares the same interests as me.</p>
+    <div class="w3-row">
+        <div class="w3-col m6 w3-center w3-padding-large">
+            <img src="images/juliusandme.jpg" class="w3-round w3-image w3-opacity w3-hover-opacity-off" alt="Me and My Friend Julius at Dinner" width="500" height="333">
+        </div>
+
+        <!-- Hide this text on small devices -->
+        <div class="w3-col m6 w3-hide-small w3-padding-large">
+            <p>Another one of my favorite experiences at Bentley would be attending Codestellation at Brandeis University.
+            This event was a Hackathon which is a type of coding competition that lasts 24 hours. The people I attended Codestellation
+            with were members of the Bentley Programming Club and going through this competition, I became better friends with
+            those in attendance. Also, this experience is special to me because it solidified the fact that I wanted
+            to do some work with programming, not just front-end. However, for now, I am focused on learning about HTML, CSS,
+            JavaScript, React.js, and BootStrap.</p>
+        </div>
+
+        <div class="w3-col m6 w3-padding-large" style="float: right;">
+            <img src="images/fallscene.jpg" alt="Fall Scene at Bentley" style="width: 100%">
+        </div>
+
+        <div class="w3-col m6 w3-hide-small w3-padding large">
+            <p>In this picture of Bentley, it represents my fall experience because in the fall, people are always plays sports.
+                I have only attended a handful of games, but now I can watch sports practices from my window or see
+                people just playing for fun on the field. Sports are something that always occupied the fall for me, so I
+                enjoy still being able to watch them here at Bentley.</p>
+        </div>
+
+        <video controls>
+        <source src="media/bentleymedia.mp3">
+        <p>Video not supported on this browser.</p>
+        </video>
+
+    </div>
+    </div>
+<script>
+    /* Variables global to this document */
+    const DEFAULT_SERVINGS = 16;
+    let   servings = DEFAULT_SERVINGS;
+    const defaultApples = 10;
+    const defaultSugar = .75;
+    const defaultCinnamon = 1;
+    const defaultAllspice = 1;
+
+    /* Onload event handler, which is called by body.onload() */
+    function setup()
+    {
+        /* factor scales original recipe to number of services (or cookies) input */
+        const factor = servings / DEFAULT_SERVINGS;
+
+        console.log("(log) setup: servings = " + servings + "; factor = " + factor);
+        /* scale each ingredient to number of servings */
+        calcIngredients ( factor );
+    }
+    /* JavaScript also appears in the <body> below */
+</script>
+
+<script>
+    function calcIngredients ( multiplier )
+    {
+        const apples = multiplier * defaultApples;
+        const sugar = multiplier * defaultSugar;
+        const cinnamon = multiplier * defaultCinnamon;
+        const allspice = multiplier * defaultAllspice;
+
+        document.getElementById("apples").innerHTML = apples.toString();
+        document.getElementById("sugar").innerHTML = sugar.toString();
+        document.getElementById("cinnamon").innerHTML = cinnamon.toString();
+        document.getElementById("allspice").innerHTML = allspice.toString();
+    }
+
+    function getServings()
+    {
+        const servingsInput = document.forms[0].servings.value;
+        /* factor scales original recipe to number of servings (or cookies) input */
+        const factor = servingsInput / DEFAULT_SERVINGS;
+
+        console.log("log getServings: servingsInput = " + servingsInput + "; factor = " + factor);
+        /* scale each ingredient to number of servings */
+        calcIngredients ( factor );
+    }
+
+    function emailImage(){
+        document.getElementById("myImg").src="images/seniorform.png"
+    }
+</script>
+
+<div id="main">
+
+    <h3>My Keep-Us-Warm Homecoming Drink</h3>
+
+    <h2 style="text-align: center;">Apple Cider Recipe</h2>
+    <p>Please input the number of servings you wish to make and then press the 'Party Size' button and your
+        ingredient amounts will appear:</p>
+    <br>
+
+    <table class="w3-center" style="width:75%">
+        <caption>The drink that this recipe will be making is homemade apple cider</caption>
+        <tr>
+            <td style="padding-top: 0.6em; padding-bottom: 1.0em;">
+                <button onclick="getServings()">
+                    Party Size
+                </button>
+            </td>
+            <!-- for value=X in this <input>, X should be DEFAULT_SERVINGS -->
+            <td>
+                <form name="homecomingdrink">
+                    <label for="servings"></label>
+                    <input id="servings" name="party-size" type="number" value=16 min=1>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td><p id="apples"></p></td>
+            <td>Number of Apples Cut into Quarters</td>
+        </tr>
+        <tr>
+            <td><p id="sugar"></p></td>
+            <td>Cups of White Sugar</td>
+        </tr>
+        <tr>
+            <td><p id="cinnamon"></p></td>
+            <td>Tablespoons of Ground Cinnamon</td>
+        </tr>
+        <tr>
+            <td><p id="allspice"></p></td>
+            <td>Tablespoons of Allspice</td>
+        </tr>
+    </table>
+
+    <!-- For value='Party Size' in this paragraph, 'Part Size' should be DEFAULT_SERVINGS -->
+    <h3>Instructions for 16 servings of Apple Cider from Allrecipes.com</h3>
+    <ol>
+        <li>
+            Place apples in a large stockpot and add enough water to cover them by at least 2 inches. Stir in sugar, cinnamon,
+            and allspice.
+        </li>
+        <li>
+            Bring to a boil. Boil the mixture uncovered for an hour. After an hour, cover the pot, reduce the heat and let
+            simmer for an additional 2 hours.
+        </li>
+        <li>
+            Strain the apple mixture through a fine mesh sieve and discard the solids. Drain the cider again through a cheesecloth
+            lined sieve. Refrigerate until cold.
+        </li>
+    </ol>
+    <p>
+        This recipe was from Allrecipes.com and was written by user Scollins. Click <a href="https://www.allrecipes.com/recipe/211772/homemade-apple-cider/">here</a>
+        for the original recipe.
+        <cite>(https://www.allrecipes.com/recipe/211772/homemade-apple-cider/)</cite>
+
+<div class="w3-large" style="background-color: pink; color: black; font-size: small;">
+    <div class="w3-container" id="where" style="padding-bottom: 32px;">
+         <div class="w3-content" style="max-width: 700px;">
+              <h6 style="color: white; text-shadow: 2px 2px 4px whitesmoke; font-size: 60px;
+               font-family: Montserrat, sans-serif;" class="w3-center">Senior Survey</h6>
+         </div>
+    </div>
+    <form name="seniorsurvey" action="mailto:detoudo_khon@bentley.edu" method="post">
+        <table class="w3-table-all w3-hoverable">
+            <thead>
+            <tr class="w3-light-gray">
+                <th>
+                    <label>Please enter your first and last name<br></label>
+                        <input type="text" id="firstname" name="firstname" maxlength="50" placeholder="First-name"/>
+                        &nbsp;
+                        <input type="text" id="lastname" name="lastname" maxlength="50" placeholder="Last-name">
+                </th>
+            </tr>
+            </thead>
+            <tr>
+                <td>
+                    <label> Please choose where you live<br></label>
+                    <input type="radio" name="location" value="Connecticut">&nbsp;Connecticut<br>
+                    <input type="radio" name="location" value="One of the other 49 states">&nbsp;One of the other 49 states<br>
+                    <input type="radio" name="location" value="Outside of the United States">&nbsp;Outside of the United States<br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Please choose your major<br></label>
+                    <select name="major">
+                        <option value="undecided">&nbsp;Undecided</option>
+                        <option value="computerscience">&nbsp;Computer Science</option>
+                        <option value="internationalaffairs">&nbsp;International Affairs</option>
+                        <option value="english">&nbsp;English</option>
+                        <option value="businessmanagement">&nbsp;Business Management</option>
+                        <option value="communications">&nbsp;Communications</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <fieldset class="group">
+                        <legend>Please choose your other top choice colleges or universities</legend>
+                        <input type="checkbox" name="school" id="bentley" value="Bentley University"/>
+                        <label for="bentley">&nbsp;Bentley University</label><br>
+                        <input type="checkbox" name="school" id="mit" value="Massachusetts Institute of Technology"/>
+                        <label for="mit">&nbsp;Massachusetts Institute of Technology</label><br>
+                        <input type="checkbox" name="school" id="harvard" value="Harvard University"/>
+                        <label for="harvard">&nbsp;Harvard University</label><br>
+                        <input type="checkbox" name="school" id="stanford" value="Stanford University"/>
+                        <label for="stanford">&nbsp;Stanford University</label><br>
+                        <input type="checkbox" name="school" id="carnegiemellon" value="Carnegie Mellon"/>
+                        <label for="carnegiemellon">&nbsp;Carnegie Mellon University</label>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>College Visit Date:&nbsp;</label>
+
+                    <input type="date" name="visit-date" id="visit-date"
+                    value="2019-10-31"
+                    min="2019-01-01" max="2019-12-31">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Submit College Info">
+                    <input type="reset" value="Clear College Info">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <img id="myImg" src="images/seniorform.png" style="margin-left: auto; margin-right: auto; display: block; padding-top: 15px; width: 50%" alt="Example of the Senior Form">
+</div>
+
+<!-- Container (Portfolio Section) -->
+<div class="w3-content w3-container w3-padding-64" id="portfolio">
+    <h3 class="w3-center">MY WORK</h3>
+    <p class="w3-center"><em>Here are the pictures I have taken during my time at Bentley<br> Click on the images to make them bigger</em></p><br>
+
+    <!-- Responsive Grid. Four columns on tablets, laptops and desktops. Will stack on mobile devices/small screens (100% width) -->
+    <div class="w3-row-padding w3-center">
+        <div class="w3-col m3">
+            <img src="images/buckethat.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Me Wearing a Bucket Hat">
+        </div>
+
+        <div class="w3-col m3">
+            <img src="images/mfacandid.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="MFA candid">
+        </div>
+
+        <div class="w3-col m3">
+            <img src="images/sunny_sunglasses.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Me Wearing Sunglasses at Quincy Market">
+        </div>
+
+        <div class="w3-col m3">
+            <img src="images/tridentbreakfast.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Me at Breakfast">
+        </div>
+    </div>
+
+    <div class="w3-row-padding w3-center w3-section">
+        <div class="w3-col m3">
+            <img src="images/tridentcoffee.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Me Drinking Coffee at Trident">
+        </div>
+
+        <div class="w3-col m3">
+            <img src="images/momandme.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="My Mom and Me when She Visited Bentley">
+        </div>
+
+        <div class="w3-col m3">
+            <img src="images/candidchinatown.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="A Candid of Me in Chinatown">
+        </div>
+    </div>
+</div>
+
+<!-- Modal for full size images on click-->
+<div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'">
+    <span class="w3-button w3-large w3-black w3-display-topright" title="Close Modal Image"><i class="fa fa-remove"></i></span>
+    <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+        <p id="caption" class="w3-opacity w3-large"></p>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
+    <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+    <div class="w3-xlarge w3-section">
+        <i class="fa fa-facebook-official w3-hover-opacity"></i>
+        <i class="fa fa-instagram w3-hover-opacity"></i>
+        <i class="fa fa-snapchat w3-hover-opacity"></i>
+        <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+        <i class="fa fa-twitter w3-hover-opacity"></i>
+        <i class="fa fa-linkedin w3-hover-opacity"></i>
+    </div>
+    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+</footer>
+
+<script>
+    // Modal Image Gallery
+    function onClick(element) {
+        document.getElementById("img01").src = element.src;
+        document.getElementById("modal01").style.display = "block";
+        var captionText = document.getElementById("caption");
+        captionText.innerHTML = element.alt;
+    }
+
+    // Change style of navbar on scroll
+    window.onscroll = function() {myFunction()};
+    function myFunction() {
+        var navbar = document.getElementById("myNavbar");
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " w3-white";
+        } else {
+            navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-white", "");
+        }
+    }
+
+    // Used to toggle the menu on small screens when clicking on the menu button
+    function toggleFunction() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+</script>
+</div>
+</body>
+</html>

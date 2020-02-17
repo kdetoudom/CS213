@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment 3, Coins</title>
+    <!-- Three usual references to our favicon, CSS & JS -->
+    <link href="images/avatar.png" rel="shortcut icon" type="image/png">
+    <link href="css/stylesheet.css" rel="stylesheet" type="type/css">
+    <script src="js/javascript.js" type="text/javascript"></script>
+    <style type="text/css">
+    </style>
+    <script type="text/javascript">
+        /* Variables global to this document */
+        const TEXT_HEADS = "Heads";
+        const TEXT_TAILS = "Tails";
+        const IMAGE_HEADS = "images/headsThumb.png";
+        const IMAGE_TAILS = "images/tailsThumb.png";
+
+        /* ONload event handler, which is called by body.onload() */
+        function setup()
+        {
+            let image = document.getElementById('myImage1');
+            image.src = IMAGE_HEADS;
+            image.alt = TEXT_HEADS;
+            console.log("(log) setup: 1st coin is " + image.alt.toLowerCase() + " side up");
+            image = document.getElementById('myImage2');
+            image.src = IMAGE_HEADS;
+            image.alt = TEXT_HEADS;
+            console.log("(log) setup: 2nd coin is " + image.alt.toLowerCase() + " side up");
+        }
+        /* JavaScript also appears in the <body> below */
+    </script>
+</head>
+
+<body onload="setup()">
+<div id="main">
+
+    <h1>Assignment 3, Coins</h1>
+    <h2>Turn Over a Coin</h2>
+
+    <img id="myImage1" onclick="changeImage()" src="" alt="">
+    <p>Click on the coin to turn it over.</p>
+
+    <script>
+        function changeImage()
+        {
+            const image1 = document.getElementById('myImage1');
+            if (image1.src.match("heads")) {
+                image1.src = IMAGE_TAILS;
+                image1.alt = TEXT_TAILS;
+            } else {
+                image1.src = IMAGE_HEADS;
+                image1.alt = TEXT_HEADS;
+            }
+            console.log("(log) changeImage: flipped to " + image1.alt.toLowerCase());
+        }
+    </script>
+
+    <h2>Toss a Coin</h2>
+
+    <img id="myImage2" src="" alt="">
+    <p id="upside">Click on the button below.</p>
+    <button onclick="toss()">Toss a Coin</button>
+
+    <script>
+        function toss()
+        {
+            const r = Math.random();        /* in [0,1), so r * 2 is in [0, 2) */
+            const u = Math.floor(r*2);
+            const image2 = document.getElementById('myImage2');
+            let   tell;
+
+            console.log("(log) toss: u = " + u + "; r = " + r);
+            if (u === 0 ) {
+                image2.src = IMAGE_HEADS;
+                image2.alt = TEXT_HEADS;
+            } else {
+                image2.src = IMAGE_TAILS;
+                image2.alt = TEXT_TAILS;
+            }
+            tell = "Your toss yielded " + image2.alt.toLowerCase() + ".";
+            document.getElementById("upside").innerHTML = tell;
+        }
+    </script>
+</div>
+</body>
+</html>

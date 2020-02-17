@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment, Ex.1</title>
+    <!-- Three usual references to our favicon, CSS & JS -->
+    <link href="images/avatar.png" rel="shortcut icon" type="image/png">
+    <style>
+        /* CSS style properties for the recipe table */
+        table, td {
+            border: 0.1em solid;
+            padding-left: 0.4em;
+            border-collapse: collapse;
+            font-size: x-large;
+        }
+    </style>
+    <script>
+        /* Variables global to this document */
+        const DEFAULT_SERVINGS = 2;
+        let   servings = DEFAULT_SERVINGS;
+        const defaultMilk = 1.5;
+        const defaultCoffee = 2;
+
+        /* Onload event handler, which is called by body.onload() */
+        function setup()
+        {
+            /* factor scales original recipe to number of services (or cookies) input */
+            const factor = servings / DEFAULT_SERVINGS;
+
+            console.log("(log) setup: servings = " + servings + "; factor = " + factor);
+            /* scale each ingredient to number of servings */
+            calcIngredients ( factor );
+        }
+        /* JavaScript also appears in the <body> below */
+    </script>
+</head>
+
+<body onload="setup()">
+
+<script>
+    function calcIngredients ( multiplier )
+    {
+        const milk = multiplier * defaultMilk;
+        const coffee = multiplier * defaultCoffee;
+
+        document.getElementById("milk").innerHTML = milk.toString();
+        document.getElementById("coffee").innerHTML = coffee.toString();
+    }
+
+    function getServings()
+    {
+        const servingsInput = document.forms[0].servings.value;
+        /* factor scales original recipe to number of servings (or cookies) input */
+        const factor = servingsInput / DEFAULT_SERVINGS;
+
+        console.log("log getServings: servingsInput = " + servingsInput + "; factor = " + factor);
+        /* scale each ingredient to number of servings */
+        calcIngredients ( factor );
+    }
+</script>
+
+    <div id="main">
+
+        <h1>Assignment 2, Example 1</h1>
+
+        <h2 style="text-align: center;"> Cafe au Lait by Martha Stewart</h2>
+        <p>Please input the number of servings you wish to make and then press the 'Party Size' button and your
+           ingredient amounts will appear:</p>
+        <br>
+
+<table style="width:75%">
+    <tr>
+        <td style="padding-top: 0.6em; padding-bottom: 1.0em;">
+            <button onclick="getServings()">
+                Party Size
+            </button>
+        </td>
+        <!-- for value=X in this <input>, X should be DEFAULT_SERVINGS -->
+        <td>
+            <form>
+                <label for="servings"></label>
+                <input id="servings" name="party-size" type="number" value=2 min=1>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td><p id="milk"></p></td>
+        <td>cups of warmed milk</td>
+    </tr>
+    <tr>
+        <td><p id="coffee"></p></td>
+        <td>cups freshly brewed coffee</td>
+    </tr>
+</table>
+
+<!-- For value='Party Size' in this paragraph, 'Part Size' should be DEFAULT_SERVINGS -->
+    <h3>Instructions for a party of 2 by Martha Stewart:</h3>
+    <ol>
+        <li>
+        Heat 1 to 1.5 cups milk in a saucepan over medium-low heat, whisking, until milk is steaming and slightly foamy.
+        </li>
+        <li>
+         Divide milk between two cafe au lait bowls or large coffee cups. Divide 2 cups coffee between bowls and stir.
+        </li>
+    </ol>
+    <p>
+        This recipe uses three quarters of a cup of milk per person,
+        which is what Martha recommends to make light
+        cafe au lait, see <a href="http://www.marthastewart.com/1142721/cafe-au-lait">here</a>
+        <cite>(http://www.marthastewart.com/1142721/cafe-ai-lait)</cite>
+    </p>
+    </div>
+</body>
+</html>

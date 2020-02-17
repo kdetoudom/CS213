@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment 3, Phrases</title>
+    <!-- Three usual references to our favicon, CSS & JS -->
+    <link href="images/avatar.png" rel="shortcut icon" type="image/png">
+    <link href="css/stylesheet.css" rel="stylesheet" type="text/css">
+    <script src="js/javascript.js" type="text/javascript"></script>
+    <style>
+    </style>
+    <script>
+        /* Variables global to this document are declared in Fun with Fruit */
+
+        /* Onload event handler, which is called by body.onload() */
+        function setup()
+        {
+            console.log("(log) in setup()");
+            const w =["cat","dog","pig","cow","owl"];
+            const n=[0,1,2,3,4,5,6,7,8,9];
+            const s= ["@","#","$","%"];
+            const wlen = w.length;
+            const nlen = n.length;
+            const slen = s.length;
+            console.log("(log) arrays w, n, s: " + w + " " + n + " " + s);
+            console.log("(log) lengths w, n, s: " + wlen + " " + nlen + " " + slen);
+            /*
+             * wind, nind, and sing all have a range of integer values, the smallest of which can be 0.
+             * Because of the Math.floor() function of the largest integers can be elen-1, and slen-1.
+             */
+            let   wind = Math.floor(Math.random()*wlen);
+            let   nind = Math.floor(Math.random()*nlen);
+            let   sind = Math.floor(Math.random()*slen);
+            console.log("(log) indeces wind, nind, sind: " + wind + " " + nind + " " + sind);
+            const welem = w[wind];
+            const nelem = n[nind];
+            const selem = s[sind];
+            console.log("(log) elements w, n, s: " + welem + " " + nelem + " " + selem);
+            let newPassword = welem + nelem + selem;
+            window.alert("Your new password is " + newPassword);
+        }
+        /* JavaScript also appears in the <body> below */
+    </script>
+</head>
+
+<body onload="setup()">
+<header>
+</header>
+<aside>
+</aside>
+
+<div id="main">
+
+    <h1>Assignment 3, Phrase</h1>
+    <! -- This is version 3 of this in-class example -->
+
+    <h2>Quote of the Day</h2>
+
+    <p id="quotetoday"></p>
+
+    <button onclick="randomQuote()">Generate a Quote</button>
+
+    <script>
+        function randomQuote()
+        {
+            console.log("(log) in randomQuote");
+            const quote = ["We're not in Kansas anymore!","Luke, I am your father!","Take the gun, leave the canoli.","Vote Pedro."];
+            const len = quote.length;
+            const randomIndex = Math.floor(Math.random()*len);
+            let today = quote[randomIndex];
+            console.log("(log) random quote is " + today);
+            document.getElementById("quotetoday").innerHTML = today;
+        }
+    </script>
+
+    <h2>Fun with Fruit (arrays)</h2>
+
+    <p id="paral"></p>
+
+    <script>
+        var fruits = ["Banana", "Orange", "Apple"];
+        let fruitsText = fruits.join(", ")
+        console.log("(log) 1st fruits array = " + fruitsText);
+        fruitsText+="<br>";
+        fruitsText+= "Length of 1st fruits array = " + fruits.length;
+        document.getElementById("paral").innerHTML = fruitsText;
+    </script>
+
+    <p id="para2"></p>
+
+    <script>
+        /*
+         * This var declaration masks the declaration of fruits[] used to set para1
+         */
+        var fruits = ["Banana", "Orange", "Apple", "Mange"];
+        let flen = fruits.length;
+        fruits[flen] = "Lemon";
+        flen = fruits.length;
+        document.getElementById("para2").innerHTML = "2nd fruits array = " + fruits.join(", ")
+                    + " (now there are " + flen + " of them)";
+        console.log("(log) length of 2nd fruits array = " + flen);
+    </script>
+
+</div>
+
+<footer>
+</footer>
+</body>
+
+</html>

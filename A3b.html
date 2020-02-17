@@ -1,0 +1,799 @@
+﻿<!DOCTYPE html>
+<!-- Adapted from https://www.w3schools.com/w3css/tryw3css_templates_photo3.htm by EM 8/28/17 -->
+<!-- Edited for Fall semester DY 9/15/19 -->
+<html lang="en">
+   <head>
+      <title>Detoudom</title>
+      <meta charset="UTF-8">
+      <!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"> -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="images/avatar.png" rel="shortcut icon" type="image/png">
+      <link href="css/w3.css" rel="stylesheet" type="text/css">
+      <script src="js/javascript.js"></script>
+      <link href="css/stylesheet.css" rel="stylesheet" type="text/css">
+      <style>
+		a:focus, a:hover {
+		   color: yellow;
+		   background-color: black;
+		   text-decoration: none;
+		 }
+        .imgcoloredbox {   /* This class is used for enclosing each of our dice */
+           float: left;
+           text-align: center;
+           width: 120px;
+           border: 2px solid white;
+           margin: 4px;
+           padding: 4px;
+        }
+        .promptbox {       /* This class is used for enclosing each of our prompts */
+           text-align: center;
+           height: 50px;
+           border: 2px solid white;
+           margin: 4px;
+           padding: 4px;
+        }
+        .likew3button {   /* This class mimicks the w3-button CSS box */
+           vertical-align: middle;
+           margin: 0;
+           padding: 8px 16px;
+        }
+        .dicedisplay {
+           width: 100%;
+        }
+        .textdisplay {
+           text-align: left;
+        }
+      </style>
+      <script>
+         /* Variables global to this document: error values, dice, and a playerDiceRoll */
+         const VERBOSE_DEBUG = false;
+
+         const game = {                 /* Game states */
+            STOPPED                  : 0,
+            STARTING                 : 1,
+            STARTED_FIRST_TURN       : 2,
+            STARTED_AFTER_FIRST_TURN : 3,
+            RESTARTING               : 4
+         };
+
+         const turn = {                        /* Turn states */
+            ROLL_DICE_DO_NEXT   : 0,          /* Enumerated type for turn state coded as { 0, 1 } */
+            SELECT_DICE_DO_NEXT : 1           /* ... this type deals with alternating prompts */
+         };
+
+         const roll = {                        /* Dice states with respect to being ready to roll (or not) */
+            DICE_NOT_READY : 0,               /* Enumerated type for dice state coded as { 0, 1, 2, 3 } */
+            DICE_READY     : 1,               /* ... this type deals with changes in dice state */
+            DICE_CLICKED   : 2,               /* 'Ready' means dice is eligible to be rolled (and clicked on) */
+            DICE_SELECTED  : 3                /* 'Selected' means dice has been set aside within a turn */
+         };
+
+         const prompt = {                      /* Prompt states */
+            EMPTY_STRING : "",                /* Pseudo-enumerated type for prompt state coded as { '', 'left', 'right' } */
+            FLOAT_LEFT   : "left",            /* ... this type helps deal with alternating prompts */
+            FLOAT_RIGHT  : "right"
+         };
+         const INVISIBLE     = "none";         /* Visibility is managed via HTML display attribute */
+         const FULLY_VISIBLE = "block";        /* 'display: block' versus 'display: none' */
+         const NOT_HIDDEN    = "visible";      /* 'visibility: visible' */
+         const FULLY_HIDDEN  = "hidden";       /* 'visibility: hidden' */
+
+         const DEFAULT_TEXT_COLOR = "rgb(0, 0, 0)";          /* black */
+         const DIM_TEXT_COLOR     = "rgb(220, 220, 220)";    /* shade of gray */
+         /* Border colors follow traffic light pattern, red means don't go */
+         const NOGO_COLOR_STRING  = "rgb(244, 67, 54)";      const NOGO_COLOR_TEXT = "red";
+         /* But no orange, in transition between greeen and red */
+         /* const CLICK_COLOR_STRING  = "rgb(255, 165, 0)";  const CLICK_COLOR_TEXT  = "orange"; */
+         /* green, means user can go, i.e., roll the dice */
+         const GO_COLOR_STRING    = "rgb(76, 175, 80)";      const GO_COLOR_TEXT   = "green";
+         /* white, also means user can roll the dice */
+         const BLANK_COLOR_STRING = "rgb(255, 255, 255)";    const BLANK_COLOR_TEXT  = "white";
+         /* black */
+         const BLACK_COLOR_STRING = "rgb(0, 0, 0)";          const BLACK_COLOR_TEXT  = "black";
+
+         const DEFAULT_WAIT_TIME  =  500;                    /* half a second (500 milliseoncds) */
+         const SHORT_WAIT_TIME    =  0;
+         const LONGISH_WAIT_TIME  =  (5*DEFAULT_WAIT_TIME);  /* less than three (3) seconds */
+
+         const NULL_DICE_ROLL = -2;            /* Null value for number of dots on face of dice */
+         const BAD_DICE_ROLL = -1;                     /* Error value for number of dots on face of dice */
+         const BAD_DICE_FILE = "images/dice7face.png"; /* Error value for image file for face of dice */
+         const BAD_DICE_TEXT = "7 white dots!";        /* Error string for number of dots on side of dice */
+
+         const dice = [
+            { dots: 1, file: "images/dice1face.png", text: "1 dot " },
+            { dots: 2, file: "images/dice2face.png", text: "2 dots" },
+            { dots: 3, file: "images/dice3face.png", text: "3 dots" },
+            { dots: 4, file: "images/dice4face.png", text: "4 dots" },
+            { dots: 5, file: "images/dice5face.png", text: "5 dots" },
+            { dots: 6, file: "images/dice6face.png", text: "6 dots" }
+         ];
+
+         const DEFAULT_FINISH_LINE = 500;
+         const MAXIMUM_FINISH_LINE = DEFAULT_FINISH_LINE;
+
+         let gameState = {
+            state       : game.STOPPED,
+            finishLine  : DEFAULT_FINISH_LINE,
+            playerScore : 0,
+            setState    : function( newState, fromWhere )
+            {
+               this.state = newState;
+               console.log("(log) setState: To " + this.state + ", by " + fromWhere +
+                       ", playerScore = " + this.playerScore);
+            },
+            hasStarted  : function()
+            {
+               return (this.state === game.STARTED_FIRST_TURN) || (this.state === game.STARTED_AFTER_FIRST_TURN);
+            }
+         };
+
+         let playerTurnState = [
+            /* label fields in these objects are intended to be read-only */
+            /* border fields are colors that get over-written */
+            { label: "PlayerRollButton", active: true,  border: DIM_TEXT_COLOR },    /* turn.ROLL_DICE_DO_NEXT */
+            { label: "PlayerSelectText", active: false, border: GO_COLOR_STRING  }   /* turn.SELECT_DICE_DO_NEXT */
+         ];
+
+         const defaultDice = 0;   /* Default dice index into *DiceRoll[] and *DiceState[] arrays (base 0) */
+
+         let playerDiceRoll = [
+            { dots: BAD_DICE_ROLL, file: BAD_DICE_FILE, text: BAD_DICE_TEXT },
+            { dots: BAD_DICE_ROLL, file: BAD_DICE_FILE, text: BAD_DICE_TEXT },
+            { dots: BAD_DICE_ROLL, file: BAD_DICE_FILE, text: BAD_DICE_TEXT },
+         ];
+
+         let playerDiceState = [
+            { rollState: roll.DICE_NOT_READY, isMaximum: false, visible: false, border: BLANK_COLOR_STRING },
+            { rollState: roll.DICE_NOT_READY, isMaximum: false, visible: false, border: BLANK_COLOR_STRING },
+            { rollState: roll.DICE_NOT_READY, isMaximum: false, visible: false, border: BLANK_COLOR_STRING }
+         ];
+
+         function randomDiceRoll( sides )
+         {
+            const rand = Math.random();              /* in [0, 1), so rand * sides is in [0, sides) */
+            const face = Math.floor(rand * sides);   /* in { 0, 1, ... sides-1 } because of floor */
+            if( VERBOSE_DEBUG ) {
+               console.log( "(log) randomDiceRoll: sides = " + sides + ", face (base 0) = " + face );
+            }
+            return dice[face];                       /* face is in { 0, 1, ... 5 } for a six-sided dice */
+         }
+
+         function dotsOK( oneDice )
+         {
+            /* Is the number of dots in the image file name and also in the text descriptor? */
+            return oneDice.dots.toString() === oneDice.text.substring(0, 1) &&
+                    oneDice.file.match(oneDice.dots.toString()) != null;
+         }
+
+         function setDiceState( who, theDiceState, index, theColor )
+         {
+            const idNumber = index + 1;
+            const divId = who.toString() + "ImgBox" + idNumber.toString();
+            let   thisDiv = document.getElementById( divId );
+            theDiceState[index].border = theColor;
+            thisDiv.style.borderColor = theDiceState[index].border;
+            const thisState = (theDiceState[index].rollState === roll.DICE_READY) ? " (ready to roll!)" : " (not rolling!)";
+            /* Display dice roll after first roll */
+            if( thisDiv.style.borderColor === BLANK_COLOR_STRING ) {
+               if( VERBOSE_DEBUG ) {
+                  console.log("(log) setDiceState: making dice " + index + " invisible" + thisState + ", border = " + thisDiv.style.borderColor );
+               }
+               theDiceState[index].visible = false;
+               thisDiv.style.display = INVISIBLE;
+            } else {
+               if( VERBOSE_DEBUG ) {
+                  console.log("(log) setDiceState: making dice " + index + " visible" + thisState + ", border = " + thisDiv.style.borderColor);
+               }
+               theDiceState[index].visible = true;
+               thisDiv.style.display = FULLY_VISIBLE;
+            }
+            return thisDiv;
+         }
+
+         /* From this function it allows the window alert to be displayed in order to allow the player to input the winning score. It also allows the player to begin rolling dice to begin the game and chose the highest dice value displayed */
+         function startGame( who, fromWhere )
+         {
+            gameState.setState( game.STARTING, "startGame()" );
+            gameState.finishLine = DEFAULT_FINISH_LINE;
+            gameState.playerScore = 0;
+
+            const whoString = who.toString();
+            const whoStringLower = whoString.toLowerCase();
+            let done = false;
+            while (!done) {
+               let inputOK = false;
+               let inputFinishLineString = "Not-a-Number";
+               let inputFinishLine;
+
+               do {
+                  inputFinishLine = NaN;  /* Handle cancel or close */
+                  inputFinishLineString = window.prompt("Please enter winning score, or click on Cancel");
+                  if( inputFinishLineString == null ) {
+                     console.log("(log) startGame: " + whoString + " cancelled her game; restarting game ...");
+                     restartGame( setup );
+                     break;
+                  }
+                  inputFinishLine = parseInt(inputFinishLineString, 10);  /* we are working in base 10 */
+                  console.log("(log) startGame: inputFinishLine = " +  inputFinishLine);
+                  if ( inputFinishLine > 0 && inputFinishLine <= MAXIMUM_FINISH_LINE ) {
+                     inputOK = true;
+                  } else {
+                     window.alert("Please enter a valid winning score");
+                  }
+               } while (!inputOK);
+
+               if ( !Number.isNaN(inputFinishLine) ) {
+                  gameState.finishLine = inputFinishLine;
+                  window.alert("The winning score for this game is " + gameState.finishLine);
+                  done = true;
+               } else {
+                  console.log("(log) startGame: Oops! Restarting game ...");
+                  restartGame( setup );
+                  break;
+               }
+            }
+
+            const badGameOver = updateScoreStatusStartGame( who );
+            if( !badGameOver ) {
+               gameState.setState( game.STARTED_FIRST_TURN, "startGame()" );
+               let lessReportHeader = document.getElementById(whoString + "HeadGameStatus");
+               const lessColor = DIM_TEXT_COLOR;
+               lessReportHeader.style.color = lessColor;
+               lessReportHeader.innerHTML = "Status of your (" + whoStringLower + "'s) game:";
+            } else {
+               console.log("(log) startGame: ERROR, bad gameOver for " + whoStringLower + " from " + fromWhere);
+            }
+         }
+
+         /* The function allows the game to restart while saving your previous score. It allows you to have a clean slate and play the game another time */
+         function restartGame( restartFunction )
+         {
+            gameState.setState( game.RESTARTING, "restartGame()" );
+            window.setTimeout( restartFunction, LONGISH_WAIT_TIME );
+         }
+
+         function startTurn( who, theTurnState, theDiceState )
+         {
+            let turnState = theTurnState[turn.ROLL_DICE_DO_NEXT];   /* Roll dice turn state, roll dice first */
+            turnState.active = true;
+            turnState.border = BLANK_COLOR_STRING;
+
+            turnState = theTurnState[turn.SELECT_DICE_DO_NEXT];     /* Select dice turn state */
+            turnState.active = false;
+            turnState.border = GO_COLOR_STRING;
+
+            const whoString = who.toString();
+            let moreReportHeader = document.getElementById(whoString + "HeadGameStatus");
+            const moreColor = DEFAULT_TEXT_COLOR;
+            moreReportHeader.style.color = moreColor;
+            /*
+             * statusReportHeader.innerHTML = "Status of your (" + whoString.toLowerCase() + "'s) game:";
+             */
+
+            const badTurnOver = updateTurnStatusStartTurn( who, theDiceState );
+            if( badTurnOver ) {
+               console.log("(log) startTurn: ERROR, bad turnOver, dice " + defaultDice +
+                       " (base 0), state = " + theDiceState[defaultDice]);
+            }
+            if( updateDiceStatusStartTurn( who, theDiceState, "ParaDice" ) === roll.DICE_CLICKED ) {
+               console.log("(log) startTurn: ERROR, a dice thinks it's been clicked");
+            }
+         }
+
+         function restartTurn( who, theTurnState, theDiceState, delay )
+         {
+            startTurn( who, theTurnState, theDiceState );
+            window.setTimeout( startDiceRoll, delay, who, theDiceState );
+         }
+
+         /* This from this function, by clicking the button, it activates the function and allows the dice faces to be randomly generated and displayed to begin the game*/
+         function startDiceRoll( who, theDiceState )
+         {
+            const diceCount = theDiceState.length;
+            for( let index = 0; index < diceCount; index++ ) {
+               theDiceState[index].rollState = roll.DICE_READY;
+               theDiceState[index].isMaximum = false;
+               theDiceState[index].visible = false;
+               setDiceState( who, theDiceState, index, BLANK_COLOR_STRING );
+            }
+
+            promptDiceRoll( who, theDiceState, "startDiceRoll()" );
+         }
+
+         /* Onclick event handler, which is called from player 'Roll X dice' button */
+         /* This is meant to handle the dice roll */
+         function handleRollOfDice( who, theRoll, theDiceState )
+         {
+            const readyForDiceRoll = playerTurnState[turn.ROLL_DICE_DO_NEXT].active;
+            const whoStringLower = who.toString().toLowerCase();
+            if( !readyForDiceRoll ) {
+               console.log("(log) handleRollOfDice: Nope for " + whoStringLower + "!");
+               return;
+            }
+            const rolled = rollDiceRoll( who, theRoll, theDiceState );
+            console.log("(log) handleRollOfDice: For " + whoStringLower + ", rolled " + rolled + " dice" );
+            displayDiceRoll( who, theRoll, theDiceState );
+
+            promptDiceSelect( who, theDiceState, "handleRollOfDice()"  );
+         }
+
+         /* Onclick event handler, which is called from dice images */
+         function handleDiceClick( who, theRoll, theDiceState, diceIndex, statusLineSuffix )
+         {
+            const readyForDiceClick = playerTurnState[turn.SELECT_DICE_DO_NEXT].active;
+            const whoStringLower = who.toString().toLowerCase();
+            if( !readyForDiceClick ) {
+               console.log("(log) handleDiceClick: Nope for " + whoStringLower + "!");
+               return;
+            }
+            const diceCount = theRoll.length;   /* How many dice? */
+            const statusLineId = who.toString() + statusLineSuffix;
+            console.log("(log) handleDiceClick: For " +  whoStringLower +
+                    ", dice index = " + diceIndex + ", will update " + statusLineId );
+
+            /* Find one (or more) dice with maximum number of dots face up */
+            let maxRoll = NULL_DICE_ROLL;
+            for( let i = 0; i < diceCount; i++ ) {
+               if( theDiceState[i].rollState < roll.DICE_SELECTED && theRoll[i].dots > maxRoll ) {
+                  maxRoll = theRoll[i].dots;
+               }
+               theDiceState[i].isMaximum = false;
+            }
+            /* Compute 'isMaximum' as a boolean for array of 3 dice indexed via { 0, 1 ... theRoll.length-1 } */
+            for( let i = 0; i < diceCount; i++ ) {
+               if( theDiceState[i].rollState < roll.DICE_SELECTED ) {
+                  const theDiceDots = theRoll[i].dots;
+                  if( theDiceDots > maxRoll ) {
+                     console.log("(log) handleDiceClick: ERROR, too many dots = " + theDiceDots);
+                  } else if ( theDiceDots === maxRoll ) {
+                     theDiceState[i].isMaximum = true;
+                  }
+               }
+            }
+
+            const index = diceIndex;            /* Dice base 0 */
+            let goodClick = false;
+            if( (theDiceState[index].rollState === roll.DICE_READY) && theDiceState[index].isMaximum ) {
+               theDiceState[index].rollState = roll.DICE_CLICKED;
+               setDiceState( who, theDiceState, index, NOGO_COLOR_STRING );
+               goodClick = true;
+            }
+
+            theDiceState[index].rollState = updateDiceStatus( who, theDiceState, index, goodClick, statusLineSuffix );
+            if( goodClick ) {
+               let turnOver = updateTurnStatus( who, theRoll, theDiceState );
+               if( turnOver ) {
+                  gameState.setState( game.STARTED_AFTER_FIRST_TURN, "handleDiceClick()" );
+                  let gameOver = updateScoreStatus( who, theRoll, theDiceState );
+                  if( gameOver ) {
+                     console.log("(log) handleDiceClick: " + who.toString() + " game over. Starting a new game ...");
+                     restartGame( setup );
+                  } else {
+                     console.log("(log) handleDiceClick: " + who.toString() + " starting a new turn ...");
+                     restartTurn( who, playerTurnState, theDiceState, LONGISH_WAIT_TIME );
+                  }
+               } else {
+                  promptDiceRoll( who, theDiceState, "handleDiceClick()" );
+               }
+            } else {
+               const badTurnOver = updateTurnStatus( who, theRoll, theDiceState );
+               if( badTurnOver ) {
+                  console.log("(log) handleDiceClick: ERROR, bad turnOver, goodClick = " + goodClick +
+                          ", dice " + index + " (base 0), state = " + theDiceState[index]);
+               }
+               promptDiceSelect( who, theDiceState, "handleDiceClick()"  );
+            }
+         }
+
+         function updateScoreStatus( who, theRoll, theDiceState )
+         {
+            const whatString = "game";
+            let moreColor = BLANK_COLOR_STRING;
+            let moreText = "The " + whatString + " has started!";
+            let gameOver = false;
+
+            if( gameState.state === game.STARTED_AFTER_FIRST_TURN ) {
+               moreColor = DEFAULT_TEXT_COLOR;
+            }
+
+            let sumRolled = sumSelected( theRoll, theDiceState );
+            gameState.playerScore += sumRolled;
+            if( gameState.playerScore >= gameState.finishLine ) {
+               moreColor = GO_COLOR_STRING;
+               moreText = "Final total for your " + whatString + " is " + gameState.playerScore;
+               gameOver = true;
+            } else {
+               moreText = "Current total for your " + whatString + " is " + gameState.playerScore;
+            }
+
+            let moreElement = document.getElementById(who.toString() + "ScoreStatus");
+            moreElement.style.color = moreColor;
+            moreElement.innerHTML = moreText;
+            return gameOver;
+         }
+
+         function updateScoreStatusStartGame( who )
+         {
+            const clauseString = " has ";
+            let lessColor = BLANK_COLOR_STRING;
+            let lessText = "The game" + clauseString + "started!";
+            let gameOver = false;
+
+            if( gameState.hasStarted() ) {
+               console.log("(log) updateScoreStatusStartGame: ERROR, game state = " + gameState.state);
+               lessColor = DEFAULT_TEXT_COLOR;
+               lessText = lessText.replace(clauseString, clauseString+"really ");
+               gameOver = true;
+            }
+
+            let lessElement = document.getElementById(who.toString() + "ScoreStatus");
+            lessElement.style.color = lessColor;
+            lessElement.innerHTML = lessText;
+            return gameOver;
+         }
+
+         function updateTurnStatus( who, theRoll, theDiceState )
+         {
+            let readyToRoll = countReadyToRoll( theDiceState );
+            const whatString ="turn";
+            let moreColor = BLANK_COLOR_STRING;
+            let moreText = "The " + whatString + " has started!";
+
+            let turnOver = false;
+            if( gameState.hasStarted() ) {
+               let maxDiceCount = theRoll.length;
+               if (readyToRoll === 0) {
+                  moreColor = GO_COLOR_STRING;
+                  moreText = "Final total for your " + whatString + " is " + sumNotReadyToRoll(theRoll, theDiceState);
+                  turnOver = true;
+               } else if (readyToRoll < maxDiceCount) {
+                  moreColor = DEFAULT_TEXT_COLOR;
+                  moreText = "Current total for your " + whatString + " is " + sumNotReadyToRoll(theRoll, theDiceState);
+               }
+            }
+
+            let moreElement = document.getElementById(who.toString() + "TurnStatus");
+            moreElement.style.color = moreColor;
+            moreElement.innerHTML = moreText;
+            return turnOver;
+         }
+
+         function updateTurnStatusStartTurn( who, theDiceState )
+         {
+            const clauseString =" has ";
+            let lessColor = BLANK_COLOR_STRING;
+            let lessText = "The turn" + clauseString + "started!";
+            let turnOver = false;
+
+            let readyToRoll = countReadyToRoll( theDiceState );
+            if( readyToRoll > 0 ) {
+               console.log("(log) updateTurnStatusStartTurn: ERROR, ready to roll count = " + readyToRoll);
+               lessColor = DEFAULT_TEXT_COLOR;
+               lessText = lessText.replace(clauseString, clauseString+"really ");
+               turnOver = true;
+            }
+
+            let lessElement = document.getElementById(who.toString() + "TurnStatus");
+            lessElement.style.color = lessColor;
+            lessElement.innerHTML = lessText;
+            return turnOver;
+         }
+
+         function updateDiceStatus( who, theDiceState, diceIndex, goodClick, statusLineSuffix )
+         {
+            const base1index = diceIndex + 1;   /* Dice base 1 */
+            const statusLineId = who.toString() + statusLineSuffix;
+            let moreColor = BLANK_COLOR_STRING;
+            let moreText = "updateDiceStatus: Going to Boston!";
+
+            let newRollState = theDiceState[diceIndex].rollState;     /* Assume dice rollState won't change */
+            if( gameState.hasStarted() ) {
+               if( goodClick ) {
+                  moreColor = GO_COLOR_STRING;
+                  moreText = "[Nice! Dice " +  base1index + " is a great pick]";
+                  newRollState = roll.DICE_SELECTED;
+               } else {
+                  moreColor = NOGO_COLOR_STRING;
+                  if( theDiceState[diceIndex].rollState === roll.DICE_SELECTED ) {
+                     moreText = "[Oops! You already picked dice " +  base1index + " (it has a " + NOGO_COLOR_TEXT + " border)]";
+                  } else {
+                     moreText = "[Oops! Dice " +  base1index + " is not the " + GO_COLOR_TEXT + "-bordered dice with the most dots]";
+                     newRollState = roll.DICE_READY;
+                  }
+               }
+            }
+
+            let moreStatus = document.getElementById(statusLineId);
+            moreStatus.style.color = moreColor;
+            moreStatus.innerHTML = moreText;
+            return newRollState;
+         }
+
+         function updateDiceStatusStartTurn( who, theDiceState, statusLineSuffix )
+         {
+            const statusLineId = who.toString() + statusLineSuffix;
+            let lessColor = DEFAULT_TEXT_COLOR;
+            let lessText = "updateDiceStatusStartTurn: Going to Boston!";
+
+            let newRollState = theDiceState[defaultDice].rollState;
+            if( gameState.hasStarted() ) {
+               lessColor = BLANK_COLOR_STRING;
+            }
+
+            let lessStatus = document.getElementById(statusLineId);
+            lessStatus.style.color = lessColor;
+            lessStatus.innerHTML = lessText;
+            return newRollState;
+         }
+
+         function promptDiceRoll( who, theDiceState, fromWhere )
+         {
+            const readyToRoll = countReadyToRoll( theDiceState );
+            console.log("(log) promptDiceRoll: dice ready = " + readyToRoll + " via " + fromWhere );
+
+            let promptColor = GO_COLOR_STRING;
+            let promptText = "You're done!";
+            if( readyToRoll > 0 ) {
+               promptColor = DEFAULT_TEXT_COLOR;
+               const countString = (readyToRoll === 1) ? "one" : readyToRoll.toString();
+               promptText = "Roll " + countString + " dice"
+            }
+
+            /* Make roll dice prompt visible */
+            playerTurnState[turn.ROLL_DICE_DO_NEXT].active = true;
+            let childElement = document.getElementById(playerTurnState[turn.ROLL_DICE_DO_NEXT].label);
+            childElement.style.borderColor = playerTurnState[turn.ROLL_DICE_DO_NEXT].border;
+            childElement.style.color = promptColor;
+            childElement.style.visibility = NOT_HIDDEN;
+            childElement.innerHTML = promptText;
+            let promptElement = childElement.parentElement;
+            promptElement.style.visibility = NOT_HIDDEN;
+            promptElement.style.cssFloat = prompt.FLOAT_LEFT;
+
+            /* Make dice selection prompt visible */
+            playerTurnState[turn.SELECT_DICE_DO_NEXT].active = false;
+            childElement = document.getElementById(playerTurnState[turn.SELECT_DICE_DO_NEXT].label);
+            childElement.style.borderColor = BLANK_COLOR_STRING;
+            childElement.style.color = BLANK_COLOR_STRING;
+            childElement.style.visibility = FULLY_HIDDEN;
+            childElement.innerHTML = prompt.EMPTY_STRING;
+            let otherElement = childElement.parentElement;
+            otherElement.style.visibility = FULLY_HIDDEN;
+            otherElement.style.cssFloat = prompt.FLOAT_RIGHT;
+         }
+
+         function promptDiceSelect( who, theDiceState, fromWhere )
+         {
+            const notSelected = countNotSelected( theDiceState );
+            const selected = theDiceState.length - notSelected;
+            console.log("(log) promptDiceSelected: dice selected = " + selected + " via " + fromWhere );
+
+            let promptColor = DEFAULT_TEXT_COLOR;
+            let promptText;
+            if( notSelected > 0 ) {
+               promptText = "Click on the dice with the most dots and a " + GO_COLOR_TEXT + " border";
+            } else {
+               promptColor = NOGO_COLOR_STRING;
+               promptText = "You're done!";
+            }
+
+            /* Make dice selection prompt visible */
+            playerTurnState[turn.SELECT_DICE_DO_NEXT].active = true;
+            let childElement = document.getElementById(playerTurnState[turn.SELECT_DICE_DO_NEXT].label);
+            childElement.style.borderColor = playerTurnState[turn.SELECT_DICE_DO_NEXT].border;
+            childElement.style.color = promptColor;
+            childElement.style.visibility = NOT_HIDDEN;
+            childElement.innerHTML = promptText;
+            let promptElement = childElement.parentElement;
+            promptElement.style.visibility = NOT_HIDDEN;
+            promptElement.style.cssFloat = prompt.FLOAT_LEFT;
+
+            /* Make roll dice prompt invisible */
+            playerTurnState[turn.ROLL_DICE_DO_NEXT].active = false;
+            childElement = document.getElementById(playerTurnState[turn.ROLL_DICE_DO_NEXT].label);
+            childElement.style.borderColor = BLANK_COLOR_STRING;
+            childElement.style.color = BLANK_COLOR_STRING;
+            childElement.style.visibility = FULLY_HIDDEN;
+            childElement.innerHTML = prompt.EMPTY_STRING;
+            let otherElement = childElement.parentElement;
+            otherElement.style.visibility = FULLY_HIDDEN;
+            otherElement.style.cssFloat = prompt.FLOAT_RIGHT;
+         }
+
+         /* Onload event handler, which is called by body.onload() */
+         function setup()
+         {
+            const whoAmI = "Player";
+            console.log("(log) setup: " + whoAmI.toString() + " game starting ...");
+            startGame( whoAmI, "setup()" );
+            restartTurn( whoAmI, playerTurnState, playerDiceState, SHORT_WAIT_TIME );
+         }
+      </script>
+   </head>
+
+   <body onload="setup()">
+
+<!-- Header -->
+      <header class="w3-display-container w3-content w3-center" style="max-width:1500px">
+         <img class="w3-image" src="images/avatar.png" alt="header image" width="1200" height="401">
+         <div class="w3-display-middle w3-padding-large w3-border w3-wide w3-center" style="color:yellow">
+            <h1 class="w3-hide-medium w3-hide-small w3-xxxlarge" style="font-family: 'Handlee', cursive;">Konnie Detoudom</h1>
+            <h2 class="w3-hide-large" style="white-space:nowrap; font-family: 'Handlee', cursive;">Konnie Detoudom</h2>
+            <h3 class="w3-hide-medium">CS 213</h3>
+         </div>
+<!-- Navbar (placed at the bottom of the header image) -->
+         <nav class="w3-bar w3-round w3-display-bottommiddle w3-hide-small" style="bottom:-16px; background-color:yellow">
+            <div role="menu">
+               <a role="menuitem" href="#" class="w3-bar-item w3-button">Home</a>
+               <a role="menuitem" href="A1.html" class="w3-bar-item w3-button">A1</a>
+               <a role="menuitem" href="A2.html" class="w3-bar-item w3-button">A2</a>
+            </div>
+         </nav>
+      </header>
+
+<!-- Navbar on small screens -->
+      <nav class="w3-center w3-padding-16 w3-hide-large w3-hide-medium" >
+         <div role="menu" class="w3-bar" style="background-color:yellow">
+            <a role="menuitem" href="#" class="w3-bar-item w3-button focusit">Home</a>
+            <a role="menuitem" href="#" class="w3-bar-item w3-button">A1</a>
+         </div>
+      </nav>
+
+<!-- Main page content -->
+      <main class="w3-content w3-padding-large w3-margin-top w3-display-container">
+         <div class="w3-padding-large w3-padding-32 w3-margin-top" style="background-color:gold">
+            <div id="main">
+               <div class="w3-container" id="GameDiceHeadings">
+                  <h1>Assignment 3b, More Dice</h1>
+                  <h2>Player half of 'Going to Boston'</h2>
+               </div>
+
+               <div class="w3-container" id="PlayerDiceDisplay">
+                  <!-- ImgBox's are base 1 where as dice indeces are base 0 (because they index arrays) -->
+                  <div class="imgcoloredbox" id="PlayerImgBox1">
+                     <!-- Dice 0 is in ImgBox1 -->
+                     <img class="dicedisplay" src="images/dice7face.png" alt="7 white dots!"
+                          onclick="handleDiceClick('Player', playerDiceRoll, playerDiceState, 0, 'ParaDice')">
+                  </div>
+                  <div class="imgcoloredbox" id="PlayerImgBox2">
+                     <!-- Dice 1 is in ImgBox2 -->
+                     <img class="dicedisplay" src="images/dice7face.png" alt="7 white dots!"
+                          onclick="handleDiceClick('Player', playerDiceRoll, playerDiceState, 1, 'ParaDice')">
+                  </div>
+                  <div class="imgcoloredbox" id="PlayerImgBox3">
+                     <!-- Dice 2 is in ImgBox3 -->
+                     <img class="dicedisplay" src="images/dice7face.png" alt="7 white dots!"
+                          onclick="handleDiceClick('Player', playerDiceRoll, playerDiceState, 2, 'ParaDice')">
+                  </div>
+               </div>
+
+               <div class="w3-container" id="DiceControls">
+                  <div id="PlayerRollPrompt" class="promptbox w3-border-gray"
+                       style="float: left; display: block; visibility: hidden;">
+                     <!-- One of these two prompts will be displayed in this container (this is the first) -->
+                     <button onclick="handleRollOfDice('Player', playerDiceRoll, playerDiceState)"
+                             id="PlayerRollButton" class="w3-button" style="visibility: hidden;">These are funny dice!</button>
+                  </div>
+                  <div id="PlayerSelectPrompt" class="promptbox w3-border-green"
+                       style="float: right; display: block; visibility: hidden;">
+                     <!-- One of these two prompts will be displayed in this container (this is the second) -->
+                     <p id="PlayerSelectText" class="likew3button" style="visibility: hidden;">No dice with borders!</p>
+                  </div>
+               </div>
+               <div class="w3-container" id="PlayerStatusInfo">
+                  <h3 id="PlayerHeadGameStatus" class="textdisplay" style="color: white">Status ...</h3>
+                  <p id="PlayerTurnStatus"  class="textdisplay"> </p>
+                  <p id="PlayerParaDice"    class="textdisplay"> </p>
+                  <!-- Display score status after first turn -->
+                  <p id="PlayerScoreStatus" class="textdisplay"> </p>
+               </div>
+
+               <script>
+                  function rollDiceRoll( who, theRoll, theDiceState )
+                  {
+                     const diceCount = theRoll.length;
+                     let rolled = 0;
+                     for( let index = 0; index < diceCount; index++ ) {
+                        let yesNoRoll;
+                        if( theDiceState[index].rollState === roll.DICE_READY ) {
+                           theRoll[index] = randomDiceRoll( dice.length );
+                           yesNoRoll = ", YES_";
+                           rolled ++;
+                        } else {
+                           yesNoRoll = ", NO_";
+                        }
+                        const areDotsOK = dotsOK( theRoll[index] ) ? "OK" : "Error!";
+                        const length = theRoll[index].file.length;
+                        const shortFile = theRoll[index].file.substring(length-dice[defaultDice].file.length, length);
+                        console.log("(log) rollDiceRoll:  index = " + index + yesNoRoll + "ROLL = { dots = " +
+                                theRoll[index].dots + ", file = " + shortFile + ", " +
+                                areDotsOK + ", rollState was " + theDiceState[index].rollState + ", border was " + theDiceState[index].border + " }");
+                     }
+                     return rolled;
+                  }
+
+                  function displayDiceRoll( who, theRoll, theDiceState )
+                  {
+                     const diceCount = theRoll.length;
+                     for( let index = 0; index < diceCount; index++ ) {
+                        const theColor = (theDiceState[index].rollState === roll.DICE_READY) ? GO_COLOR_STRING : NOGO_COLOR_STRING;
+                        let thisDiv = setDiceState( who, theDiceState, index, theColor );
+                        let thisImg = thisDiv.firstElementChild;
+                        thisImg.src = theRoll[index].file;
+                        thisImg.alt = theRoll[index].text;
+                        if( VERBOSE_DEBUG ) {
+                           const length = thisImg.src.length;
+                           const shortFile = thisImg.src.substring(length-dice[defaultDice].file.length, length);
+                           console.log( "(log) displayDiceRoll: Img.src = " + shortFile + ", Img.alt = " + thisImg.alt );
+                        }
+                     }
+                  }
+
+                  function countReadyToRoll( theDiceState )
+                  {
+                     const diceCount = theDiceState.length;
+                     let diceReadyCount = 0;
+
+                     for( let index = 0; index < diceCount; index++ ) {
+                        if( theDiceState[index].rollState === roll.DICE_READY ) {
+                           diceReadyCount ++;
+                        }
+                     }
+                     return diceReadyCount;
+                  }
+
+                  function countNotSelected( theDiceState )
+                  {
+                     const diceCount = theDiceState.length;
+                     let diceNotSelectedCount = 0;
+
+                     for( let index = 0; index < diceCount; index++ ) {
+                        if( theDiceState[index].rollState < roll.DICE_SELECTED ) {
+                           diceNotSelectedCount ++;
+                        }
+                     }
+                     return diceNotSelectedCount;
+                  }
+
+                  function sumSelected( theRoll, theDiceState )
+                  {
+                     const diceCount = theRoll.length;
+                     let theSumSelected = 0;
+
+                     for( let index = 0; index < diceCount; index++ ) {
+                        if( theDiceState[index].rollState === roll.DICE_SELECTED ) {
+                           theSumSelected += theRoll[index].dots;
+                        }
+                     }
+                     return theSumSelected;
+                  }
+
+                  function sumNotReadyToRoll( theRoll, theDiceState )
+                  {
+                     const diceCount = theRoll.length;
+                     let sumDontRollAgainDots = 0;
+
+                     for( let index = 0; index < diceCount; index++ ) {
+                        if( theDiceState[index].rollState > roll.DICE_READY ) {
+                           sumDontRollAgainDots += theRoll[index].dots;
+                        }
+                     }
+                     return sumDontRollAgainDots;
+                  }
+               </script>
+            </div>
+         <cite style="font-size:xx-small">Header image from: <a href="http://www.bentley.edu/offices/marketing-communications/bentley-brand">Bentley Brand Page</a></cite>
+         </div>
+      </main>
+<!-- End Main page content -->
+
+<!-- Footer -->
+      <footer class="w3-display-container w3-content w3-center" style="max-width:1500px">
+         <div class="w3-container" style="background-color:yellow">
+            <p tabindex="0" id="foot" onmouseover="myAvatar()" onmouseout="myCopyright()" onfocus="myAvatar()" onblur="myCopyright()">Copyright &copy; 2019</p>
+         </div>
+      </footer>
+<!-- End Footer -->
+   </body>
+</html>

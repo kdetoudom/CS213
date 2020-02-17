@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<!-- Adapted from https://www.w3schools.com/w3css/tryw3css_templates_photo3.htm by EM 8/28/17 -->
+<!-- Edited for Spring semester EM 1/15/18 -->
+<html lang="en">
+<!-- KD September 22nd, 2019 -->
+   <head>
+      <title>Assignment 1</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="images/avatar.png" rel="shortcut icon" type="image/png">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <script src="js/javascript.js"></script>
+      <link href="css/stylesheet.css" rel="stylesheet">
+      <style>
+		a:focus, a:hover {
+		   color: yellow;
+		   background-color: black;
+		   text-decoration: none;
+		 }
+         .w3-center {
+            color: rgb(66, 135, 174);
+            text-shadow: 1px 1px #3E81A7;
+         }
+         .pfonts {
+            font-family: "monospace";
+         }
+         #firstp {
+            text-align: center;
+            font-variant: all-petite-caps;
+         }
+         .bottom-left{
+             position: relative;
+             z-index: 3;
+         }
+         .bottom-right {
+             position: relative;
+             z-index: 1;
+             left: 50px;
+          }
+         .top-left {
+             position: relative;
+             z-index: 1;
+         }
+        .top-right {
+            position: relative;
+            z-index: 3;
+            left: 50px
+          }
+      </style>
+      <script>
+      </script>
+   </head>
+
+   <body>
+
+<!-- Header -->
+      <header class="w3-display-container w3-content w3-center" style="max-width:1500px">
+         <img class="w3-image" src="images/headerimage.jpg" alt="Me" width="1500" height="600">
+         <div class="w3-display-middle w3-padding-large w3-border w3-wide w3-center" style="color:yellow">
+            <h1 class="w3-hide-medium w3-hide-small w3-xxxlarge" style="font-family: 'Handlee', cursive;">Konnie Detoudom</h1>
+            <h2 class="w3-hide-large" style="white-space:nowrap;font-family: 'Handlee', cursive;">Konnie Detoudom</h2>
+            <h3 class="w3-hide-medium">CS 213</h3>
+         </div>
+<!-- Navbar (placed at the bottom of the header image) -->
+          <nav class="w3-bar w3-round w3-display-bottommiddle w3-hide-small" style="bottom:-16px; background-color:#A9DD76">
+              <div role="menu">
+                 <a role="menuitem" href="default.html" class="w3-bar-item w3-button">Home</a>
+                 <a role="menuitem" href="A1.html" class="w3-bar-item w3-button">A1</a>
+                 <a role="menuitem" href="A2.html" class="w3-bar-item w3-button">A2</a>
+              </div>
+         </nav>
+      </header>
+
+<!-- Navbar on small screens -->
+      <nav class="w3-center w3-padding-16 w3-hide-large w3-hide-medium" >
+         <div class="w3-bar" style="background-color:#A9DD76">
+            <a href="#" class="w3-bar-item w3-button focusit">Home</a>
+            <a href="#" class="w3-bar-item w3-button">A1</a>
+         </div>
+      </nav>
+
+<!-- Main page content -->
+      <main class="w3-content w3-padding-large w3-margin-top w3-display-container">
+         <div class="w3-padding-large w3-padding-32 w3-margin-top" style="background-color:#A9DD76">
+         <h3 class="w3-center"><i>Big Hero 6</i></h3>
+         <hr style="border-color: white">
+         <p class="pfonts">This site is for my first CS213 Assignment.</p>
+            <h2 style="color: #000000">Biography</h2>
+            <p class="pfonts" id="firstp">My favorite movie that has received an Academy Award is <i>Big Hero 6</i>. The movie is centralized
+               around Hiro, who is a Robotics prodigy spending too much time on illegal robot fights. His older brother
+               Tadashi attempts to direct Hiro's wasted talents by showing him his University lab where he created
+               Baymax, a robot with the sole purpose of taking care of people. Hiro is then encouraged to invent
+               something to present to the robotics convention in hopes of gaining entrance into the university. After
+               a fire breaks out during the convention, killing Tadashi, Hiro teams up with Go Go, Honey Lemon, Wasabi,
+               Fred, and the lovable Baymax to find out who was responsible for the fire. The lead actors and actresses
+               in the movie were Ryan Potter (Hiro), Jamie Chung (Go Go), Genesis Rodriguez (Honey Lemon), Scott Admsit (Baymax),
+               T.J. Miller (Fred), and Damon Wayans Jr. (Wasabi). <i>Big Hero 6</i> is my favorite movie because although
+               the story was tragic, there were moments of appropriate placed humour from Baymax due to the character
+               being hilarious when he has low battery. Also the animation was amazing and was able to fuse the cities
+               of San Francisco and Tokyo together seamlessly to create San Fransokyo.</p>
+            <ol>
+               <li>Baymax</li>
+               <li>Animated</li>
+               <li>Disney</li>
+               <li>
+                   <ul>
+                  <li>Robot</li>
+                  <li>Personal Healthcare Companion</li>
+                  <li>Adorable</li>
+                   </ul>
+               </li>
+            </ol>
+            <blockquote cite="https://ohmy.disney.com/movies/2016/05/01/a-baymax-quote-for-any-occasion/" style="font-family: 'Segoe UI Black'">
+               "I am a robot. I cannot be offended."
+               <cite>- Quote by Baymax</cite>
+            </blockquote>
+            <img src="images/bighero6.jpg" alt="Big Hero 6" style="border-style: double; border-width: 2px; border-color: white; border-radius: 30px; padding: 20px; float: right; filter: brightness(101%)">
+            <cite>Image from:<a href="https://matome.naver.jp/odai/2142295914073826701/2142295969374226103">Naver Japan.</a></cite>
+
+             <!-- Information about Spider-Man: Into the Spider-Verse -->
+             <p class="pfonts">The second movie I chose as my favorite as an Academy Award winner would be <i>Spider-Man: Into the Spider-Verse</i>.
+            The movie revolves around Miles Morales, a teenager living in Brooklyn. He gets bitten by a radioactive spider
+            and begins developing abilities that turn him into the one and only Spider-Man. Miles then meets Peter Parker
+            and his other Spider-Man counterparts from alternate realities. Together, they team up in order to prevent Kingpin,
+            a giant madman who is dead-set on opening portals to other universes, before it destroys every dimension.</p>
+            <img src="images/spiderman.jpg" alt="Spider-Man: Into the Spider-Verse" style="border-style: double; border-width: 2px; border-color: white; border-radius: 30px; padding: 20px; float: right; filter: brightness(101%)">
+            <cite>Image from:<a href="https://www.comingsoon.net/movies/news/1041007-spider-man-into-the-spider-verse-digital-and-blu-ray-release-info">Coming Soon Network.</a> </cite>
+
+             <!-- Comparing the Two Movies-->
+            <p class="pfonts">The relationship <i>Big Hero 6</i>and <i>Spider-Man: Into the Spider-Verse</i> is that both were winners
+            of the Best Animated Feature when they were nominated. Also, both movies were focused on the theme of
+            superheroes even though it was less prominent in <i>Big Hero 6</i>. The lead actors and actresses for
+            <i>Spider-Man: Into the Spider-Verse</i> were Shameik Moore (Miles Morales), Hailee Steinfeld (Gwen Stacy),
+            and Jake Johnson (Spider-Man). To compare <i>Big Hero 6</i>and <i>Spider-Man: Into the Spider-Verse</i>,
+            both were created by large studios: Disney and Sony. Also, the movies are both based on comic books, making
+            heavily anticipated by the public. Something that sets the movies apart from one another is that in
+            <i>Spider-Man: Into the Spider-Verse</i>, there are elements of a classic comic book. An example of this
+            would be when some of the scenes are animated and colored using the pop art style.</p>
+            <cite style="font-size:xx-small">Header image from:<a href="https://www.polygon.com/2014/11/6/7169885/big-hero-6-review-disney">Polygon</a></cite>
+
+             <!-- Z-index images -->
+            <h2>A Tale of Two Movies</h2>
+             <div class="w3-display-container w3-center w3-content my-container">
+                 <div class="top-left">
+                     <img src="images/baymaxandhiro.jpg" alt="Baymax and Hiro" style="width: 250px">
+                     <cite>Image from: <a href="https://www.wired.com/2014/10/big-hero-6/">Wired</a></cite>
+                 </div>
+                 <div class="top-right">
+                     <img src="images/huggingbaymax.jpg" alt="Baymax hugging Hiro" style="width: 250px">
+                     <cite>Image from: <a href="https://www.nytimes.com/2014/11/07/movies/big-hero-6-an-animated-film-based-on-a-marvel-comic-book.html">The New York Times</a></cite>
+                 </div>
+                 <div class="bottom-left">
+                     <img src="images/milesandpeterparker.jpg" alt="Miles and Peter Parker" style="width: 250px">
+                     <cite>Image from: <a href="https://www.salon.com/2019/06/28/i-was-wrong-about-spider-man-into-the-spider-verse/">Salon</a></cite>
+                 </div>
+                 <div class="bottom-right">
+                     <img src="images/milespeterandgwen.jpg" alt="Miles, Peter Parker, and Spider Gwen" style="width: 250px">
+                     <cite>Image from: <a href="https://www.imdb.com/title/tt4633694/">IMDb</a></cite>
+                 </div>
+             </div>
+         </div>
+      </main>
+<!-- End Main page content -->
+
+<!-- Footer -->
+      <footer class="w3-display-container w3-content w3-center" style="max-width:1500px">
+         <div class="w3-container" style="background-color:#A9DD76">
+            <p tabindex="0" id="foot" onmouseover="myAvatar()" onmouseout="myCopyright()" onfocus="myAvatar()" onblur="myCopyright()">Copyright &copy; 2019</p>
+            <p style="font-size: medium; color: rgb(102, 195, 255)">μ</p>
+         </div>
+      </footer>
+<!-- End Footer -->
+   </body>
+</html>
